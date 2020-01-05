@@ -17,8 +17,8 @@ jobs:
       run:  xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build
     - name: Run tests
       id:  xcodetest
-      run: xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample" -testPlan "UnitSample1"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -resultBundlePath "testReports/TestResult.xcresult" test
-            echo "::set-output name=result::${pipestatus[1]}" 
+      run: xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample" -testPlan "UnitSample1"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -resultBundlePath "testReports/TestResult.xcresult" test | xcpretty --color --report html --output TestReports/report.html
+            echo "::set-output name=result::1" 
     - name: Test Reports
       uses: actions/upload-artifact@v1
       with:
