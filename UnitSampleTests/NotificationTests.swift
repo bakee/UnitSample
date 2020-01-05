@@ -39,6 +39,8 @@ class NotificationTests: XCTestCase {
         
         XCTAssertTrue(notificationObserver.didHandleNotification)
         
+        XCTAssertFalse(notificationObserver.didHandleNotification)
+        
         
     }
     
