@@ -18,7 +18,14 @@ jobs:
     - name: Run tests
       continue-on-error: true
       id:  xcodetest
-      run: xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample" -testPlan "UnitSample1"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -resultBundlePath "testReports/TestResult.xcresult" test | xcpretty --color --report html --output TestReports/report.html
+      run: 
+        xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample" -testPlan "UnitSample1"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -resultBundlePath "testReports/TestResult.xcresult" test | xcpretty --color --report html --output TestReports/report.html
+        echo "::set-output name=estatus::'${pipestatus[1]}'"
+    - name: Test Reports
+      uses: actions/upload-artifact@v1
+      with:
+          name: testReports
+          path: TestReports
     - name: Check Tests Passed
-      if: failure()
+      if: steps.xcodetest.outputs.estatus != '0'
       run: exit 1
