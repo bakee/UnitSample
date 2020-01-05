@@ -12,11 +12,10 @@ jobs:
         os: [macos-latest]
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Build
-      run:  xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build
+    #- uses: actions/checkout@v1
+    #- name: Build
+    #  run:  xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build
     - name: Run tests
-      continue-on-error: true
       id:  xcodetest
       run: 
         xcodebuild -project UnitSample.xcodeproj -scheme "UnitSample" -testPlan "UnitSample1"  -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11 Pro'  -configuration Debug  CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -resultBundlePath "testReports/TestResult.xcresult" test | xcpretty --test --color --report html --output TestReports/report.html
